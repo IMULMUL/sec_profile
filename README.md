@@ -14,6 +14,7 @@
 # 微信公众号 推荐
 | nickname_english | weixin_no | title | url| 
 | --- | --- | --- | ---| 
+| AI科技评论 | aitechtalk | 如何以初学者角度写好一篇国际学术论文？ | https://mp.weixin.qq.com/s/zwTlXBrZiC88y9F5DDU0_g | 1| 
 | 安全学术圈 | secquan | EuroS&P 2020 论文录用列表 | https://mp.weixin.qq.com/s/tIUS121s3JPOg7yC0j2rNQ | 1| 
 | 腾讯安全应急响应中心 | tsrc_team | 浅谈DDoS攻防对抗中的AI实践 | https://mp.weixin.qq.com/s/5v38BBewMVXZbbN2oMYg0A | 1| 
 | 安全喷子 |  | 威胁狩猎101文档 | https://mp.weixin.qq.com/s/0hOtnTz9QrKlLivAobjU7Q | 1| 

@@ -14,6 +14,7 @@
 # 微信公众号 推荐
 | nickname_english | weixin_no | title | url| 
 | --- | --- | --- | ---| 
+| AI科技评论 | aitechtalk | 如何以初学者角度写好一篇国际学术论文？ | https://mp.weixin.qq.com/s/zwTlXBrZiC88y9F5DDU0_g | 1| 
 | 赵武的自留地 |  | 写在Goby新版发布前，讨论网络安全测试工具的发展 | https://mp.weixin.qq.com/s/hW0A1jwq-pm4M-4LGUZIrA | 1| 
 | PolarisLab | PolarisLab | Bypassing Crowdstrike Falcon 1：大力出奇迹 | https://mp.weixin.qq.com/s/x0uGrnMXbzAAV9Q9bxR7SQ | 1| 
 | 安全乐观主义 |  | SDL已死，应用安全路在何方？ | https://mp.weixin.qq.com/s/tYRiKiI7bjgyzQguMA1mrw | 1| 

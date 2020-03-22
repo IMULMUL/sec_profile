@@ -318,7 +318,7 @@
 | 网络通信与经济 | ncel_cuhk |  | https://mp.weixin.qq.com/s/v_Uw6XbK3ksecPOH2bcDfw | 1| 
 | 腾讯御见威胁情报中心 |  |  | https://mp.weixin.qq.com/s/-cCnpo1kBebvJ7WMRj65tg | 10| 
 | 闻道解惑 | wendao_jiehuo |  | https://mp.weixin.qq.com/s/qm3mS78r43IIOHgZ-6YyGw | 1| 
-| AI科技评论 | aitechtalk |  | https://mp.weixin.qq.com/s/5UyAoAm0Llfm3YoobKSSCA | 2| 
+| AI科技评论 | aitechtalk |  | https://mp.weixin.qq.com/s/5UyAoAm0Llfm3YoobKSSCA | 3| 
 | Bypass | Bypass-- |  | https://mp.weixin.qq.com/s?__biz=MzA3NzE2MjgwMg==&mid=2448903583&idx=1&sn=172d776a85dc99863d6d9450ef940b1e&chksm=8b55ddc2bc2254d4ebff63e83031e422239aa4a945d5699cc2cfe2eb18e6cd413a90d41823d4&mpshare=1&scene=23&srcid=0303eUNXG8ydUHQN0DtMhZMy#rd | 43| 
 | 威胁猎人 | ThreatHunter |  | http://mp.weixin.qq.com/s/evGK8v2rjM4IGYODYXFvtA | 4| 
 | 密码学报 |  |  | https://mp.weixin.qq.com/s/u1mDFINefmUEeeDsYrUsAw | 1| 
