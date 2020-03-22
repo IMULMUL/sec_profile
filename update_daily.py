@@ -35,7 +35,7 @@ def update_github():
 
     ret = os.system(cmd)
     if ret != 0:
-        print "%s failed" % cmd
+        print("%s failed" % cmd)
 
 
 if __name__ == "__main__":
