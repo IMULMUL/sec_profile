@@ -87,7 +87,7 @@ def scraw(so, proxy=None, delta=3):
                                         domain_name=overview.get("domain_name"),
                                         url=overview.get("url")
                                     )
-                                    print st
+                                    print(st)
 
                                     url = overview.get("url")
                                     ts = overview.get("ts")
@@ -116,7 +116,7 @@ def scraw(so, proxy=None, delta=3):
 
                                     if sql:
                                         try:
-                                            print sql
+                                            print(sql)
                                             so.execute(sql)
                                         except Exception as e:
                                             logging.error("[sql]: %s %s" % (sql, str(e)))

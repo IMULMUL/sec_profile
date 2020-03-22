@@ -46,9 +46,7 @@ def scraw(so, proxy=None, delta=2):
             rows = soup.find_all("div", class_='card-body')
 
             if rows:
-
                 for row in rows:
-
                     if row:
 
                         overview = {}
@@ -100,7 +98,6 @@ def scraw(so, proxy=None, delta=2):
                         if card_text_ts:
                             card_text_ts = strip_n(card_text_ts.get_text())
                             domain_ts = parse_sec_today_url(card_text_ts)
-                            # print card_text_ts, domain_ts
 
                             if domain_ts:
                                 domain, ts = domain_ts
@@ -116,7 +113,6 @@ def scraw(so, proxy=None, delta=2):
 
                             if sql:
                                 try:
-
                                     so.execute(sql)
                                 except Exception as e:
                                     logging.error("[sec_total_sql]: sql(%s) error(%s)" % (sql, str(e)))
@@ -131,8 +127,7 @@ def scraw(so, proxy=None, delta=2):
                                 domain_name=overview.get("domain_name"),
                                 url=overview.get("url")
                             )
-                            print st
-                            # print sql
+                            print(st)
 
                             url = overview.get("url")
                             ts = overview.get("ts")
@@ -142,9 +137,7 @@ def scraw(so, proxy=None, delta=2):
                             sql = ""
 
                             if url.find("://twitter.com") != -1:
-
                                 d = get_twitter_info(url, title, ts=ts, tag=tag, proxy=proxy)
-
                                 if d:
                                     sql = d2sql(d, table="twitter")
 
@@ -161,7 +154,6 @@ def scraw(so, proxy=None, delta=2):
 
                             if sql:
                                 try:
-                                    # print sql
                                     so.execute(sql)
                                 except Exception as e:
                                     logging.error("[sql]: %s %s" % (sql, str(e)))
@@ -176,4 +168,4 @@ if __name__ == "__main__":
     # }
     proxy = None
     so = SQLiteOper("data/scrap.db")
-    scraw(so, proxy=proxy)
+    scraw(so, proxy=proxy, delta=7)

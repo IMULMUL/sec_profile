@@ -162,7 +162,7 @@ def parse_item(html_hd, so=None, proxy=None):
                 )
                 try:
                     so.execute(update_sql)
-                    print update_sql
+                    print(update_sql)
                 except Exception as e:
                     logging.error("[update_sql]: %s str(%s)" % (update_sql, str(e)))
 
@@ -188,7 +188,7 @@ def parse_item(html_hd, so=None, proxy=None):
 
             if sql:
                 try:
-                    print sql
+                    print(sql)
                     so.execute(sql)
                 except Exception as e:
                     logging.error("[sql]: %s %s" % (sql, str(e)))
@@ -216,7 +216,7 @@ def parse_all(fnames=None, renew=False, proxy=None):
         so.execute(sql)
 
     if fnames is None:
-        print "no new secwiki"
+        print("no new secwiki")
         return
 
     nos = sort_fname(fnames)
@@ -248,7 +248,7 @@ def parse_all(fnames=None, renew=False, proxy=None):
                     results_list[k] = content
 
                     line = "\t".join(content)
-                    print line
+                    print(line)
                     result_fh.write("{line}{linesep}".format(line=line, linesep=os.linesep))
 
             so.executemany(sql, operate_list=results_list.values())

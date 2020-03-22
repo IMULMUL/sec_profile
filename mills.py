@@ -12,12 +12,15 @@ import os
 import re
 import sqlite3
 from urlparse import urlparse
+import json
 
 import requests
 import tldextract
 from bs4 import BeautifulSoup
 
+
 class TimeoutError(Exception): pass
+
 
 def timeout_wrapper(seconds, other_thing):
     def _wapper(func):
@@ -29,11 +32,12 @@ def timeout_wrapper(seconds, other_thing):
         signal.alarm(seconds)
 
         return func
+
     return _wapper
+
 
 def do_other_thing():
     return
-
 
 
 def list2str(l):
@@ -70,8 +74,6 @@ def parse_url(url, isupdate=False):
     if isupdate:
         extract.update()
     ext = extract(url)
-    # o.schema, o.netloc,o.path
-    # ext.subdomain, ext.suffix, ext.domain + "." + ext.suffix
     return [o, ext]
 
 
@@ -100,7 +102,7 @@ class SQLiteOper(object):
 
     def __init__(self, dbpath="", db_is_new=False, schemafile=""):
         if db_is_new:
-            print "create new schema"
+            print("create new schema")
             if os.path.exists(dbpath):
                 os.remove(dbpath)
             with codecs.open(schemafile, mode='rb', encoding='utf-8', errors='ignore') as f:
@@ -128,15 +130,12 @@ class SQLiteOper(object):
             cursor.execute(query_statement, operate_dict)
         else:
             cursor.execute(query_statement)
-        # row_count = len(cursor.fetchall())
-        # if row_count != 0:
-        #    print "%s %d" % (query_statement, row_count)
+
         for line in cursor.fetchall():
             yield line
 
     def executemany(self, operate_statement, operate_list=None):
         """insert/update"""
-        # print insert_statement
         logging.debug(operate_statement)
         cursor = self.sqlite3_conn.cursor()
 
@@ -198,13 +197,11 @@ def get_weixin_info(url="", ts="", tag="", max_redirects=30, proxy=None, root_di
                 logging.error("GET title of %s failed : %s" % (url, repr(e)))
                 return
 
-            title = soup.find('h2',class_="rich_media_title")
+            title = soup.find('h2', class_="rich_media_title")
             if title:
                 title = title.text
                 if title:
                     title = strip_n(title)
-
-
 
             rich_media_meta_list = soup.find("div", class_="rich_media_meta_list")
 
@@ -232,8 +229,6 @@ def get_weixin_info(url="", ts="", tag="", max_redirects=30, proxy=None, root_di
                         if len(profile_metas) == 2:
                             weixin_no = profile_metas[0].text
                             weixin_subject = profile_metas[1].text
-
-
 
             if not nickname_english:
                 return
@@ -308,7 +303,6 @@ def get_github_info(url="", title="", ts="", tag="",
         with codecs.open(fname, mode='rb') as fr:
             try:
                 soup = BeautifulSoup(fr, 'lxml')
-
             except Exception as e:
                 logging.error("GET title of %s failed : %s" % (url, repr(e)))
                 return
@@ -441,7 +435,6 @@ def get_github_info(url="", title="", ts="", tag="",
                             p = re.match('(\d+\.*\d*)([km]*)', t)
                             if p:
                                 n, d = p.groups()
-                                # print n,d,parts[0]
 
                                 if d == 'k':
                                     t = int(float(n) * 1000)
@@ -501,6 +494,7 @@ def get_github_info(url="", title="", ts="", tag="",
 
     return overview
 
+
 @timeout_wrapper(1, do_other_thing)
 def get_request(url,
                 max_redirects=30,
@@ -532,8 +526,6 @@ def get_request(url,
 
     s.proxies = proxy
 
-
-
     while retry > 0:
         try:
 
@@ -543,8 +535,6 @@ def get_request(url,
                           timeout=timeout
 
                           )
-
-
 
             if r.reason == "OK":
 
@@ -577,20 +567,15 @@ def get_request(url,
                 retry = 0
 
             else:
-
                 logging.info("[url]: retry:%d %s, %s" % (retry, url, r.reason))
                 retry = retry - 1
 
         except Exception as e:
-
-            print e
             e = str(e)
 
-
-            if  is_get_real_url:
+            if is_get_real_url:
                 ret = parse_request_error_str(e)
                 if ret:
-
                     content = "<html><head><title>%s</title></head>" \
                               "<body>%s</body></html>" % (ret, url)
 
@@ -605,6 +590,7 @@ def get_request(url,
                 retry = retry - 1
 
     return ret
+
 
 @timeout_wrapper(1, do_other_thing)
 def get_title(url, proxy=None, retry=1, timeout=10):
@@ -733,6 +719,7 @@ def get_twitter_info(url, title="", ts="", tag="",
             }
             return overview
 
+
 @timeout_wrapper(1, do_other_thing)
 def get_redirect_url(url,
                      proxy=None,
@@ -832,6 +819,7 @@ def d2sql(d, table="github", action="replace"):
     )
     return sql
 
+
 def parse_domain_tag(st):
     """
 
@@ -845,6 +833,7 @@ def parse_domain_tag(st):
     if match:
         domain = match.groups()
         return domain[0]
+
 
 def parse_sec_today_url(st):
     """
@@ -888,35 +877,47 @@ def parse_request_error_str(st):
         return ret
 
 
+def test_get_weixin_info():
+    """
+
+    :return:
+    """
+    url = "https://mp.weixin.qq.com/s?__biz=MzU2NTc2MjAyNg" \
+          "==&mid=2247483758&idx=1&sn=1bd0006d16747389046058ea34c3b7b7&chksm=fcb783ebcbc00afd694b7a2ee10ad32aff0a534963878541ee17974ffee29c63342f4e617661&token=1823181969&lang=zh_CN#rd"
+    ret = get_weixin_info(url=url)
+    print(ret)
+
+
+def test_get_github_info():
+    """
+
+    :return:
+    """
+    url = "https://github.com/tanjiti/sec_profile"
+    ret = get_github_info(url, isnew=False)
+    print(ret)
+
+
+def test_get_twitter_info():
+    """
+
+    :return:
+    """
+    url = ""
+    ret = get_twitter_info(url)
+    print(ret)
+
+
+def test_get_title():
+    """
+
+    :return:
+    """
+    pass
+
 
 if __name__ == "__main__":
     """
     """
-    import json
-
-    url = "https://github.com/FuzzySecurity"
-    ret = get_github_info(url, title="fefe", isnew=True)
-
-    # print json.dumps(ret, indent=4)
-    # print d2sql(ret)
-    url = "https://sec.today/pulses/15647d0b-ad62-4c24-82ef-6bb4b23fd5f3/"
-    st = "github.com • 1 day ago Tools"
-
-    # st="pcsxcetrasupport3.wordpress.com • 1 day, 8 hours ago MalwareAnalysis"
-    st = "source_day helpx.adobe.com • 2 days, 9 hours ago Popular Software"
-    st = "d4stiny.github.io • 7 hours ago SecurityProduct"
-    st = "&#8226; 1 日 之前"
-    #print parse_sec_today_url(st)
-
-    st = "HTTPSConnectionPool(host='gist.github.com', port=443): Max retries exceeded with url: /allyshka/f159c0b43f1374f87f2c3817d6401fd6 (Caused by ConnectTimeoutError(<urllib3.connection.VerifiedHTTPSConnection object at 0x109da00d0>, 'Connection to gist.github.com timed out. (connect timeout=10)'))"
-
-    # st="HTTPConnectionPool(host='speakerdeck.com', port=80): Max retries exceeded with url: / (Caused by ConnectTimeoutError(<urllib3.connection.HTTPConnection object at 0x10a93fc50>, 'Connection to speakerdeck.com timed out. (connect timeout=10)'))"
-
-    url = "https://sec.today/pulses/faee0dc9-8eb5-4ed5-a054-9f96390965c5/"
-
-    #print get_redirect_url(url,issql=False)
-    #print parse_request_error_str(st)
-
-
-    print get_weixin_info(url="https://mp.weixin.qq.com/s/tAMqC8NpgkXDGAgZHtLd7A")
-
+    test_get_github_info()
+    test_get_weixin_info()

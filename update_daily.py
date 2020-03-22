@@ -7,6 +7,7 @@ sys.setdefaultencoding('utf8')
 
 from secwiki_today import scraw as secwiki_scraw
 from xuanwu_today import scraw as xuanwu_scraw
+import secwiki as secwiki
 from mills import SQLiteOper
 from mills import get_special_date
 import visual
@@ -50,5 +51,7 @@ if __name__ == "__main__":
     scraw(proxy=proxy)
 
     visual.draw_readme()
+
+    secwiki.main(renew=False)
 
     update_github()
